@@ -1,0 +1,380 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+:root {
+  --dark: #233142;
+  --light: #455d7a;
+  --action: #f95959;
+  --white: #e3e3e3;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Raleway;
+}
+body {
+  /* background-color: var(--white); */
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+}
+.table {
+  overflow: auto;
+}
+table {
+  border-collapse: separate;
+  width: 100%;
+}
+
+table tr:nth-child(odd) {
+  background-color: var(--white);
+}
+th {
+  background-color: var(--dark);
+  padding: 1rem 3rem;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+td {
+  font-weight: 500;
+  font-size: 1.2rem;
+  text-align: center;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--light);
+  border-right: 1px solid var(--light);
+}
+h1 {
+  color: var(--dark);
+  font-size: 2.5rem;
+}
+.searchTable {
+  margin: 1rem;
+  padding: 0.3rem 0.5rem;
+  width: 20%;
+}
+.todoCount {
+  font-size: 1.7rem;
+  color: var(--dark);
+  padding: 1rem;
+  position: relative;
+}
+footer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.newTask {
+  font-size: 3rem;
+  border-radius: 10px;
+  padding: 0.2rem 1rem;
+  line-height: 0.5;
+  background-color: var(--action);
+  color: #fff;
+  margin-right: auto;
+  cursor: pointer;
+  margin-bottom: 3px;
+}
+.filter {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+.filter-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.filter-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  white-space: nowrap;
+}
+.filter-item input {
+  width: 1rem;
+  height: 1rem;
+  margin: 0;
+  padding: 0;
+}
+.filter-item label {
+  white-space: nowrap;
+}
+#filter-icon {
+  align-self: center;
+  margin-right: 1rem;
+  cursor: pointer;
+  position: relative;
+}
+.status-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.status-item p {
+  margin-right: 5px;
+}
+
+.save-container {
+  right: 1px;
+  top: 5px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  width: 100%;
+}
+.save-icon {
+  cursor: pointer;
+}
+#overlay {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.773);
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 99;
+}
+.modal {
+  height: 100vh;
+  position: fixed;
+  z-index: 999;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: none;
+  background-color: transparent;
+}
+.modal-input {
+  background-color: var(--dark);
+  padding: 5rem;
+}
+.modal-input input {
+  width: 100%;
+  margin: 0 0 2rem 0;
+  padding: 0.8rem;
+}
+.modal-input label {
+  color: var(--white);
+
+  font-weight: 500;
+}
+.close {
+  cursor: pointer;
+  position: absolute;
+  padding: 0.5rem 1rem;
+  background-color: red;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 600;
+  border: none;
+  right: 1px;
+}
+.submit {
+  width: 100%;
+  background-color: var(--action);
+  color: var(--white);
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  border: none;
+  cursor: pointer;
+}
+.cancel {
+  width: 100%;
+  background-color: var(--white);
+  color: var(--action);
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+#storage-status {
+  display: none;
+  position: fixed;
+  top: 2rem;
+  right: 50%;
+  transform: translateX(50%);
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--white);
+  padding: 1rem;
+  background-color: var(--light);
+}
+.editable input {
+  width: 80%;
+  font-size: 1rem;
+  padding: 0px;
+  margin: 0;
+  font-weight: 600;
+}
+.modal-input p {
+  color: var(--white);
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+.spin {
+  animation: rotate 2s infinite ease-out;
+}
+.actionTD svg {
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+}
+.actionTD i {
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.action-icon:hover {
+  fill: var(--action);
+  cursor: pointer;
+}
+.action-icon,
+.done {
+  margin-right: 10px;
+  cursor: pointer;
+}
+@media screen and (max-width: 1024px) {
+  table th {
+    font-size: 1rem;
+  }
+  table td {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  .filter-item {
+    margin-right: 5px;
+    padding: 5px;
+  }
+  .searchTable {
+    width: 40%;
+  }
+  td {
+    padding: 0.5rem 1.6rem;
+  }
+}
+@media screen and (max-width: 780px) {
+  .editable input {
+    font-size: 0.7rem;
+    width: 100%;
+  }
+  tr:first-child {
+    display: none;
+  }
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
+  tr {
+    border: 1px solid #ccc;
+  }
+
+  td {
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
+  }
+
+  td:before {
+    position: absolute;
+    top: 7px;
+    left: 6px;
+    width: 45%;
+    padding-right: 50%;
+    white-space: nowrap;
+  }
+  td:nth-of-type(1):before {
+    content: "ID";
+  }
+  td:nth-of-type(2):before {
+    content: "TODO Description";
+  }
+  td:nth-of-type(3):before {
+    content: "User ID";
+  }
+  td:nth-of-type(4):before {
+    content: "Status";
+  }
+  td:nth-of-type(5):before {
+    content: "Actions";
+  }
+  .status-item {
+    justify-content: center;
+  }
+  .action-icon {
+    transform: scale(0.8);
+  }
+  .save-container svg,
+  .save-container a,
+  .save-container i {
+    transform: scale(0.8);
+  }
+  .actionTD i,
+  .actionTD svg {
+    transform: scale(1);
+  }
+  .modal-input {
+    width: 85%;
+    padding: 2rem;
+  }
+  .modal-input input {
+    padding: 0.4rem;
+  }
+}
+@media screen and (max-width: 470px) {
+  .actionTD svg {
+    transform: scale(0.8);
+  }
+  .actionTD i {
+    transform: scale(1);
+  }
+  .save-container {
+    margin-top: 1rem;
+  }
+  .filter-item {
+    display: flex;
+    margin-right: 5px;
+    padding: 0;
+  }
+  .filter-item label {
+    font-size: 0.7rem;
+  }
+  .filter-item input {
+    transform: scale(0.8);
+    margin: 0;
+  }
+  .searchTable {
+    width: 100%;
+  }
+  h1 {
+    font-size: 2rem;
+  }
+  td::before {
+    font-size: 0.8rem;
+  }
+  table td {
+    font-size: 0.8rem;
+  }
+}
