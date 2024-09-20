@@ -168,7 +168,7 @@ const updateSelection = (row) => {
     clearRowSelection(row);
   } else {
     row.isSelected = true;
-    row.style.backgroundColor = "#3390FF";
+    row.style.backgroundColor = "#4799fd";
     selectedRows.add(row);
   }
 };
@@ -179,6 +179,9 @@ const clearRowSelection = (row) => {
     selectedRows.delete(row);
   }
 };
+document.addEventListener("mousedown", function (event) {
+  event.preventDefault();
+});
 document.addEventListener("click", (e) => {
   if (e.target.classList.contains("submit")) return;
   const targetRow = e.target.tagName === "TD" ? e.target.closest("tr") : null;

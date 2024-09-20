@@ -21,9 +21,6 @@ body {
   justify-content: center;
   padding: 4rem;
 }
-.table {
-  overflow: auto;
-}
 table {
   border-collapse: separate;
   width: 100%;
@@ -208,6 +205,18 @@ footer {
   background-color: var(--light);
 }
 .editable input {
+  text-align: center;
+  border: none;
+  border-bottom: 2px solid black;
+  width: 80%;
+  font-size: 1rem;
+  padding: 0px;
+  margin: 0;
+  font-weight: 600;
+}
+.editable input:focus {
+  border: none;
+  border-bottom: 2px solid black;
   width: 80%;
   font-size: 1rem;
   padding: 0px;
@@ -224,7 +233,7 @@ footer {
   animation: rotate 2s infinite ease-out;
 }
 .actionTD svg {
-  margin: 0;
+  margin: 0 5px;
   padding: 0;
   display: inline-block;
 }
