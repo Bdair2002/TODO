@@ -22,6 +22,8 @@ function displayTodos() {
   todos.forEach((todo, index) => {
     const todoItem = document.createElement("tr");
     todoItem.classList.add("selectable");
+    todoItem.classList.add("draggable");
+    todoItem.setAttribute("draggable", true);
     todoItem.innerHTML = `
             <td class="id">${todo.id}</td>
             <td class="description editable"> ${todo.todo}</td>
@@ -41,6 +43,7 @@ function displayTodos() {
     todoTable.appendChild(todoItem);
   });
   makeEditable();
+  makeDraggable();
   updateTodoCount();
 }
 function updateTodoCount() {
@@ -163,8 +166,9 @@ document.getElementById("my-form").addEventListener("submit", (e) => {
 });
 const selectedRows = new Set();
 let selectedRow = null;
-const updateSelection = (row) => {
-  if (selectedRows.has(row)) {
+const updateSelection = (row, e) => {
+  let shiftClicked = e ? e.shiftKey : false;
+  if (selectedRows.has(row) && !shiftClicked) {
     clearRowSelection(row);
   } else {
     row.isSelected = true;
@@ -179,9 +183,7 @@ const clearRowSelection = (row) => {
     selectedRows.delete(row);
   }
 };
-document.addEventListener("mousedown", function (event) {
-  event.preventDefault();
-});
+
 document.addEventListener("click", (e) => {
   if (e.target.classList.contains("submit")) return;
   const targetRow = e.target.tagName === "TD" ? e.target.closest("tr") : null;
@@ -214,16 +216,16 @@ function handleShiftSelection(e, targetRow) {
     e.target.compareDocumentPosition(firstSelectedRow) &
     Node.DOCUMENT_POSITION_PRECEDING;
   if (isFollowing) {
-    selectRange(targetRow, firstSelectedRow, "nextElementSibling");
+    selectRange(targetRow, firstSelectedRow, "nextElementSibling", e);
   } else if (isPreceding) {
-    selectRange(targetRow, firstSelectedRow, "previousElementSibling");
+    selectRange(targetRow, firstSelectedRow, "previousElementSibling", e);
   }
 }
 
-function selectRange(startRow, endRow, direction) {
+function selectRange(startRow, endRow, direction, e) {
   let currentRow = startRow;
   while (currentRow && currentRow !== endRow) {
-    updateSelection(currentRow);
+    updateSelection(currentRow, e);
     currentRow = currentRow[direction];
   }
 }
@@ -282,7 +284,6 @@ function makeEditable() {
       this.innerHTML = "";
       this.appendChild(input);
       input.focus();
-
       input.addEventListener("blur", () => {
         const newValue = input.value;
         this.innerText = newValue;
@@ -301,6 +302,45 @@ function makeEditable() {
       });
     });
   });
+}
+
+function makeDraggable() {
+  const draggableRows = document.querySelectorAll(".draggable");
+  draggableRows.forEach((row) => {
+    row.addEventListener("dragstart", (e) => {
+      row.classList.add("dragging");
+    });
+    row.addEventListener("dragend", (e) => {
+      row.classList.remove("dragging");
+    });
+  });
+
+  const table = document.getElementsByTagName("table")[0];
+  table.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    let draggingRow = document.querySelector(".dragging");
+    const nextRow = getNextRow(e.clientY);
+    table.insertBefore(draggingRow, nextRow.element);
+  });
+
+  function getNextRow(y) {
+    let draggableElements = [
+      ...document.querySelectorAll(".draggable:not(.dragging)"),
+    ];
+
+    return draggableElements.reduce(
+      (closest, row) => {
+        const border = row.getBoundingClientRect();
+        const offset = y - border.top - border.height / 2;
+        if (offset < 0 && offset > closest.offset) {
+          return { offset: offset, element: row };
+        } else {
+          return closest;
+        }
+      },
+      { offset: Number.NEGATIVE_INFINITY }
+    );
+  }
 }
 
 function saveChanges(input, id, cell, row) {
@@ -443,4 +483,5 @@ async function sendRequest(url, method = "GET", data = null) {
     throw error;
   }
 }
+
 init();

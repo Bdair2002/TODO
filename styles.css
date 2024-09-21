@@ -208,6 +208,7 @@ footer {
   text-align: center;
   border: none;
   border-bottom: 2px solid black;
+  background-color: transparent;
   width: 80%;
   font-size: 1rem;
   padding: 0px;
@@ -241,6 +242,10 @@ footer {
   margin: 0;
   padding: 0;
   display: inline-block;
+}
+.dragging {
+  background-color: var(--white);
+  opacity: 0.4;
 }
 
 @keyframes rotate {
